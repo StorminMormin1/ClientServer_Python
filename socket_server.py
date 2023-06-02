@@ -50,7 +50,7 @@ def server_program():
 
         # Send a custom input message to the client
         else:
-            data = input(' -> ')
+            data = input(" -> ")
             conn.send(data.encode())  # send data to the client
 
     conn.close()  # close the connection
