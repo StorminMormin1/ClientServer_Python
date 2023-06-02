@@ -27,8 +27,9 @@ def server_program():
         if not data:
             # if data is not received break
             break
-            
         print("From connected user: " + str(data))
+
+        # Send a name back to the client
         if data == 'names':
             conn.send("Enter a number for a letter that a name will start with:".encode())
             data = conn.recv(1024).decode()
@@ -40,17 +41,20 @@ def server_program():
                 print("Sent looked-up name to client")
             else:
                 conn.send("List index out of range".encode())
+        
+        # Read a file to the client
+        elif data == "file":
+            f = open("words.txt", "r")
+            name = f.readline()
+            conn.send(name.encode())
+
+        # Send a custom input message to the client
         else:
             data = input(' -> ')
             conn.send(data.encode())  # send data to the client
 
     conn.close()  # close the connection
     print(f"User {str(address)} disconnected from server.")
-
-# def get_from_list():
-
-
-
 
 if __name__ == '__main__':
     server_program()
